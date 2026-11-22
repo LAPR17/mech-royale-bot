@@ -561,6 +561,14 @@ class Bot:
                 if gun_ok and dd < 150 and self.aim_err(me, yaw, pitch) * dd < 2.0:
                     fire0 = True
 
+        # ---------------- zone survival override during combat
+        if target is not None and (not me["in_zone"] or dzone > rr - 5.0):
+            zv = self.nav_to(me, rc[0], rc[1])
+            if zv is not None:
+                mv = zv
+            boost = me["energy"] > 12
+            label = "zone_escape"
+
         # ---------------- dodge override
         if dodge is not None:
             mv = (dodge[0], dodge[1])
